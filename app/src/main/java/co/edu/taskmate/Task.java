@@ -7,7 +7,7 @@ public class Task {
     private String title;
     private String description;
     private String date;
-    private int status; // 0 = Pendiente, 1
+    private int status;
 
     public Task(int id, String title, String description, String date, int status) {
         this.id = id;

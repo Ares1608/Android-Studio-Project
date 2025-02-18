@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // Nombre de la base de datos y versión
+
     private static final String DATABASE_NAME = "taskmate.db";
     private static final int DATABASE_VERSION = 1;
 
@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_DATE = "date";
     private static final String COLUMN_STATUS = "status";
 
-    // Sentencia para crear la tabla de tareas
+
     private static final String CREATE_TABLE_TASKS = "CREATE TABLE " + TABLE_TASKS + " (" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_TITLE + " TEXT, " +
@@ -40,18 +40,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Crear la tabla de tareas
+
         db.execSQL(CREATE_TABLE_TASKS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Eliminar la tabla anterior si existe y crear una nueva
+
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASKS);
         onCreate(db);
     }
 
-    // Mtodo para agregar una nueva tarea
+
     public void addTask(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -65,7 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Mtodo para obtener todas las tareas
+
     @SuppressLint("Range")
     public List<Task> getAllTasks() {
         List<Task> taskList = new ArrayList<>();
@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return taskList;
     }
 
-    // Mtodo para obtener una tarea por su ID
+
     @SuppressLint("Range")
     public Task getTaskById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -116,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    // Mtodo para actualizar una tarea existente
+
     public void updateTask(Task task) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Mtodo para eliminar una tarea
+
     public void deleteTask(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TASKS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});

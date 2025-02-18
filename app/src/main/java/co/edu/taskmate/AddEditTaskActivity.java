@@ -23,14 +23,14 @@ public class AddEditTaskActivity extends AppCompatActivity {
     private Button buttonSelectDate, buttonSaveTask;
     private DatabaseHelper dbHelper;
     private Calendar selectedDate = Calendar.getInstance();
-    private int taskId = -1; // -1 indica que es una nueva tarea
+    private int taskId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_task);
 
-        // Inicializar vistas
+
         editTextTitle = findViewById(R.id.editTextTitle);
         editTextDescription = findViewById(R.id.editTextDescription);
         textViewSelectedDate = findViewById(R.id.textViewSelectedDate);
@@ -38,10 +38,10 @@ public class AddEditTaskActivity extends AppCompatActivity {
         buttonSelectDate = findViewById(R.id.buttonSelectDate);
         buttonSaveTask = findViewById(R.id.buttonSaveTask);
 
-        // Inicializar DatabaseHelper
+
         dbHelper = new DatabaseHelper(this);
 
-        // Verificar si se está editando una tarea existente
+
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("TASK_ID")) {
             taskId = intent.getIntExtra("TASK_ID", -1);
@@ -50,10 +50,10 @@ public class AddEditTaskActivity extends AppCompatActivity {
             }
         }
 
-        // Configurar el botón para seleccionar fecha
+
         buttonSelectDate.setOnClickListener(v -> showDatePickerDialog());
 
-        // Configurar el botón para guardar la tarea
+
         buttonSaveTask.setOnClickListener(v -> saveTask());
     }
 
@@ -85,7 +85,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
             textViewSelectedDate.setText("Fecha seleccionada: " + task.getDate());
             checkBoxCompleted.setChecked(task.getStatus() == 1);
 
-            // Convertir la fecha de la tarea a Calendar
+
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                 selectedDate.setTime(sdf.parse(task.getDate()));
@@ -109,17 +109,17 @@ public class AddEditTaskActivity extends AppCompatActivity {
         Task task = new Task(title, description, date, status);
 
         if (taskId == -1) {
-            // Crear una nueva tarea
+
             dbHelper.addTask(task);
             Toast.makeText(this, "Tarea guardada", Toast.LENGTH_SHORT).show();
         } else {
-            // Actualizar una tarea existente
+
             task.setId(taskId);
             dbHelper.updateTask(task);
             Toast.makeText(this, "Tarea actualizada", Toast.LENGTH_SHORT).show();
         }
 
-        // Cerrar la actividad
+
         finish();
     }
 }

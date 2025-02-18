@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Título atractivo de la aplicación -->
+
     <TextView
         android:id="@+id/tvAppTitle"
         android:layout_width="wrap_content"
@@ -21,7 +21,7 @@
         android:padding="10dp"
         android:layout_gravity="center_horizontal"/>
 
-    <!-- Cita en la parte superior -->
+
     <TextView
         android:id="@+id/quoteText"
         android:layout_width="wrap_content"
@@ -33,14 +33,14 @@
         android:gravity="center_horizontal"
         android:layout_alignParentTop="true"/>
 
-    <!-- RecyclerView para las tareas -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <!-- Floating Action Button para agregar tarea -->
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_task"
         android:layout_width="wrap_content"

@@ -41,27 +41,27 @@ public class NotificationHelper {
     }
 
     public void sendNotification(String title, String message) {
-        // Verificar si el permiso está concedido (requerido en Android 13 y superior)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                return; // No mostrar la notificación si no se tiene el permiso
+                return; //
             }
         }
 
-        // Crear un Intent para abrir MainActivity al hacer clic en la notificación
+
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        // Crear la notificación
+
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notification) // Icono de la notificación
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true) // Cerrar la notificación al hacer clic
+                .setAutoCancel(true)
                 .build();
 
-        // Mostrar la notificación
+
         notificationManager.notify(NOTIFICATION_ID, notification);
     }
 }

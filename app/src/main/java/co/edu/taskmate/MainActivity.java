@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private TaskAdapter taskAdapter;
     private DatabaseHelper dbHelper;
     private FloatingActionButton fabAddTask;
-    private TextView quoteTextView;  // TextView para mostrar la cita
+    private TextView quoteTextView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -28,45 +28,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inicializar vistas
+
         recyclerView = findViewById(R.id.recyclerView);
         fabAddTask = findViewById(R.id.fab_add_task);
         quoteTextView = findViewById(R.id.quoteText); // Aquí está el TextView para la cita
 
-        // Inicializar DatabaseHelper
+
         dbHelper = new DatabaseHelper(this);
 
-        // Configurar RecyclerView
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadTasks();
 
-        // Configurar el botón flotante para agregar tareas
+
         fabAddTask.setOnClickListener(v -> {
-            // Abrir la actividad AddEditTaskActivity para agregar tareas
+
             Intent intent = new Intent(MainActivity.this, AddEditTaskActivity.class);
             startActivity(intent);
         });
 
-        // Llamar al método para cargar la cita al abrir la actividad
+
         loadQuote();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Recargar tareas cada vez que la actividad se reinicie
+
         loadTasks();
     }
 
     private void loadTasks() {
-        // Obtener todas las tareas de la base de datos
+
         List<Task> taskList = dbHelper.getAllTasks();
 
-        // Inicializar el adaptador y asignarlo al RecyclerView
+
         taskAdapter = new TaskAdapter(taskList, dbHelper, this, new TaskAdapter.OnTaskClickListener() {
             @Override
             public void onTaskClick(Task task) {
-                // Abrir la actividad de detalles de la tarea
+
                 Intent intent = new Intent(MainActivity.this, ActivityTaskDetail.class);
                 intent.putExtra("TASK_ID", task.getId());
                 startActivity(intent);
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTaskChecked(Task task, boolean isChecked) {
-                // Actualizar el estado de la tarea en la base de datos
+
                 task.setStatus(isChecked ? 1 : 0);
                 dbHelper.updateTask(task);
             }
@@ -82,12 +82,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(taskAdapter);
     }
 
-    // Método para cargar la cita de la API
+
     private void loadQuote() {
-        // Crear una instancia de Retrofit
+
         ZenQuotesApi zenQuotesApi = RetrofitClient.getClient().create(ZenQuotesApi.class);
 
-        // Realizar la llamada a la API para obtener la cita
+
         Call<List<Quote>> call = zenQuotesApi.getQuote();
 
         call.enqueue(new Callback<List<Quote>>() {
@@ -97,12 +97,12 @@ public class MainActivity extends AppCompatActivity {
                     List<Quote> quotes = response.body();
 
                     if (quotes != null && !quotes.isEmpty()) {
-                        // Obtener la primera cita
+
                         Quote quote = quotes.get(0);
                         String quoteText = quote.getText();
                         String author = quote.getAuthor();
 
-                        // Mostrar la cita en el TextView
+
                         quoteTextView.setText("\"" + quoteText + "\"\n- " + author);
                     } else {
                         quoteTextView.setText("No hay citas disponibles");

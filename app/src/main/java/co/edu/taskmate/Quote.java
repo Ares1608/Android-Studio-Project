@@ -21,7 +21,7 @@ public class Quote {
         this.a = a;
     }
 
-    // Métodos para convertir estos a 'text' y 'author' si prefieres ese nombre
+
     public String getText() {
         return q;
     }
